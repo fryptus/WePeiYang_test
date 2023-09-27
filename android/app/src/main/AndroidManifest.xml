@@ -1,0 +1,210 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.twt.service">
+
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CAMERA" />
+
+    <!--友盟  https://developer.umeng.com/docs/119267/detail/118584#title-tul-yb2-sqm -->
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <!--前台服务开启权限-->
+    <!--    <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>-->
+    <!--弹出横幅通知的权限-->
+    <!--        <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>-->
+
+    <!--高德定位sdk https://lbs.amap.com/api/android-location-sdk/guide/android-location/getlocation -->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
+    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
+
+    <!--应用内更新-->
+    <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
+    <!--DownloadManager download without notification-->
+    <uses-permission android:name="android.permission.DOWNLOAD_WITHOUT_NOTIFICATION" />
+
+    <!--    <uses-permission android:name="android.permission.QUERY_ALL_PACKAGES"/>-->
+
+    <!--手动删除语音权限-->
+    <uses-permission
+        android:name="android.permission.RECORD_AUDIO"
+        tools:node="remove" />
+
+    <queries>
+        <!--    url_launcher    -->
+        <intent>
+            <action android:name="android.intent.action.VIEW" />
+            <category android:name="android.intent.category.BROWSABLE" />
+            <data android:scheme="https" />
+        </intent>
+        <!--    个推-->
+        <intent>
+            <action android:name="com.getui.sdk.action" />
+        </intent>
+        <!--    腾讯sdk（分享）-->
+        <package android:name="com.tencent.mobileqq" />
+    </queries>
+
+    <application
+        android:name=".WBYApplication"
+        android:extractNativeLibs="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/label"
+        android:usesCleartextTraffic="true"
+        tools:replace="android:label"
+        tools:targetApi="m">
+
+        <!--    应用主Activity    -->
+        <activity
+            android:name=".MainActivity"
+            android:configChanges="orientation|keyboardHidden|keyboard|screenSize|smallestScreenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode"
+            android:exported="true"
+            android:fitsSystemWindows="true"
+            android:hardwareAccelerated="true"
+            android:launchMode="singleInstance"
+            android:screenOrientation="portrait"
+            android:theme="@style/LaunchTheme"
+            android:windowSoftInputMode="adjustResize">
+            <!-- Specifies an Android theme to apply to this Activity as soon as
+                 the Android process has started. This theme is visible to the user
+                 while the Flutter UI initializes. After that, this theme continues
+                 to determine the Window background behind the Flutter UI. -->
+            <meta-data
+                android:name="io.flutter.embedding.android.NormalTheme"
+                android:resource="@style/NormalTheme" />
+<!--            &lt;!&ndash; Displays an Android View that continues showing the launch screen-->
+<!--                 Drawable until Flutter paints its first frame, then this splash-->
+<!--                 screen fades out. A splash screen is useful to avoid any visual-->
+<!--                 gap between the end of Android's launch screen and the painting of-->
+<!--                 Flutter's first frame. &ndash;&gt;-->
+<!--            <meta-data-->
+<!--                android:name="io.flutter.embedding.android.SplashScreenDrawable"-->
+<!--                android:resource="@drawable/launch_background" />-->
+            <!--        应用主入口    -->
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+            <!--        求实论坛通知拉起应用    -->
+            <!--        微北洋信箱通知拉起应用    -->
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="wpy.app"
+                    android:pathPrefix="/open"
+                    android:scheme="wpy" />
+            </intent-filter>
+            <!--        友盟卖点验证  -->
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data android:scheme="um.60464782b8c8d45c1390e7e3" />
+            </intent-filter>
+        </activity>
+
+        <!--    QQ sdk必备Activity -->
+        <activity
+            android:name="com.tencent.connect.common.AssistActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="behind" />
+        <activity
+            android:name="com.tencent.tauth.AuthActivity"
+            android:exported="true"
+            android:launchMode="singleTask"
+            android:noHistory="true">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data android:scheme="tencent1104743406" />
+            </intent-filter>
+        </activity>
+
+        <!--    高德-->
+        <meta-data
+            android:name="com.amap.api.v2.apikey"
+            android:value="7b3d4abbc6ac33c33b7d97985e8baf4f" />
+        <service android:name="com.amap.api.location.APSService" />
+
+        <!-- 用户自定义服务继承自GTIntentService,作为SDK与APP桥梁服务,用来接收各种消息和命令回复-->
+        <service
+            android:name=".push.WBYIntentService"
+            android:permission="android.permission.BIND_JOB_SERVICE" />
+        <!-- 用户自定义服务名 -->
+        <service
+            android:name=".push.WBYPushService"
+            android:exported="false"
+            android:label="PushService"
+            android:process=":pushservice" />
+
+        <!-- Don't delete the meta-data below.
+             This is used by the Flutter tool to generate GeneratedPluginRegistrant.java -->
+        <meta-data
+            android:name="flutterEmbedding"
+            android:value="2" />
+
+        <!--    桌面小组件-->
+        <receiver
+            android:name=".widget.ScheduleCardWidgetProvider"
+            android:exported="false"
+            android:label="@string/widget_label">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="com.twt.appwidget.refresh" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/schedule_widget_card_provider" />
+        </receiver>
+        <service
+            android:name=".widget.WidgetCardService"
+            android:permission="android.permission.BIND_REMOTEVIEWS" />
+
+        <!--    QQ分享 -->
+        <provider
+            android:name=".common.ImageProvider"
+            android:authorities="${applicationId}.ImageProvider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
+
+        <!--    应用内更新apk存储地址  -->
+        <provider
+            android:name=".common.ApkProvider"
+            android:authorities="${applicationId}.ApkProvider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/apk_download_path" />
+        </provider>
+
+    </application>
+</manifest>
