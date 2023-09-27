@@ -269,7 +269,7 @@ class _HoursCounterWidget extends StatelessWidget {
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(15.r),
                   gradient: LinearGradient(
-                    colors: [Colors.white, Colors.white54],
+                    colors: [Colors.white, Colors.blueAccent],
                   ),
                 ),
               )
