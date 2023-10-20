@@ -169,11 +169,16 @@ class WePeiYangAppState extends State<WePeiYangApp>
     });
   }
 
+  bool _hidden = false;
+
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     if (state == AppLifecycleState.resumed) {
       checkEventList();
     }
+    setState(() {
+      _hidden = state != AppLifecycleState.resumed;
+    });
   }
 
   checkEventList() async {
@@ -309,7 +314,16 @@ class WePeiYangAppState extends State<WePeiYangApp>
                   return Locale(availableLanguages.first);
                 },
                 locale: localModel.locale(),
-                home: child,
+                home: Stack(
+                  children: <Widget>[
+                    child!,
+                    if(_hidden) Container(
+                      decoration: BoxDecoration(
+                        color: Colors.white10
+                      ),
+                    ),
+                  ],
+                ),
                 builder: FlutterSmartDialog.init(builder: _builder),
                 // builder: FToastBuilder(),
               );
